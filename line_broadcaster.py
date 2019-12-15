@@ -28,13 +28,13 @@ def callback():
 
     #handle webhook body
     try:
-        handler.handle(body, signature)
+        lineWebhook.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
 
     return "OK"
 
-@handler.add(MessageEvent, message=TextMessage)
+@lineWebhook.add(MessageEvent, message=TextMessage)
 def handleMessage(event):
     lineApi.reply_message(
         event.reply_token,
