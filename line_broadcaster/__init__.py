@@ -1,7 +1,7 @@
 import os
-
 from flask import Flask
 
+# Application factory
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping (
@@ -15,3 +15,18 @@ def create_app(test_config=None):
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
+
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+
+    from . import line_broadcaster
+    app.register_blueprint(line_broadcaster.bp)
+
+    @app.route("/hello")
+    def hello():
+        line_broadcaster.broadcastMessage()
+        return "Hello, World!"
+
+    return app

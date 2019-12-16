@@ -3,7 +3,9 @@ line_broadcaster.py
 [TESTING FUNCTION]
 Connects to line's MessagingApi and broadcasts messages to user.
 """
-from flask import Flask, request, abort
+from flask import (
+    Blueprint, Flask, request, abort
+)
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -14,16 +16,16 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 
-app = Flask(__name__)
-
 # Reads tokens for line API access
-from security_reader import SecurityReader
+from line_broadcaster.security_reader import SecurityReader
 secretReader = SecurityReader()
 lineApi = LineBotApi(secretReader.getToken())
 lineWebhook = WebhookHandler(secretReader.getWebhookSecret())
 secretReader.close()
 
-@app.route("/callback", methods=["POST"])
+bp = Blueprint("broadcaster", __name__, url_prefix="/line")
+
+@bp.route("/callback", methods=["POST"])
 def callback():
     signature = request.headers["X-Line-Signature"]
     body = request.get_data(as_text=True)
@@ -44,9 +46,9 @@ def handleMessage(event):
         TextSendMessage(text="Your secret mix is: " + event.source.userId)
     )
 
-def broadcastMessage():
+def broadcastMessage(message="default message"):
     lineApi.broadcast(
-        TextSendMessage(text="Hello, Line MessageAPI!")
+        TextSendMessage(text=message)
     )
 
 def multiCastMessage():
@@ -55,7 +57,5 @@ def multiCastMessage():
         TextSendMessage(text="You've received some Secret Chikuma Mix.")
     )
 
-# Testing enter point
 if __name__ == "__main__":
-    print("Testing functionality--")
-    app.run()
+    broadcastMessage()

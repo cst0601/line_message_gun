@@ -5,3 +5,4 @@ line_deploy
 line_env
 
 line_broadcaster/secret_mix
+line_broadcaster/__pycache__
