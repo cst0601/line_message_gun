@@ -1,5 +1,4 @@
 build
-dist
 line_broadcaster.egg-info
 line_deploy
 line_env
