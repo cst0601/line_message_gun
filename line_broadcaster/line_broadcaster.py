@@ -16,9 +16,12 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-# **MAKE SURE TO HIDE THIS SOMEWHERE ELSE WHEN DEPLOYING**
-lineApi = LineBotApi("aq+ZqC4hLqVsF1XPJcFGzkjrjma6exsfRS8wdinQoh6a7gC6BKkwff9dcDjpv7v5CailhhbKSltbOlSX4DyKf77p2O5v6P9Y19SYhDYAe/35BX9cNQNZFlkooA/0N/jhdX63wKYhJNv0nU9FZfWDqQdB04t89/1O/w1cDnyilFU=")
-lineWebhook = WebhookHandler("281b6e5b692059c9f19c2f22c8b0b93c")
+# Reads tokens for line API access
+from security_reader import SecurityReader
+secretReader = SecurityReader()
+lineApi = LineBotApi(secretReader.getToken())
+lineWebhook = WebhookHandler(secretReader.getWebhookSecret())
+secretReader.close()
 
 @app.route("/callback", methods=["POST"])
 def callback():
