@@ -1,1 +1,1 @@
-web: waitress-serve --call --port=8080 line_broadcaster:create_app
+web: waitress-serve --call --port=$PORT line_broadcaster:create_app
