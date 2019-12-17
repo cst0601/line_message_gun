@@ -46,6 +46,11 @@ def handleMessage(event):
             event.reply_token,
             TextSendMessage(text="Your secret mix is: " + event.source.userId)
         )
+    else:
+        lineApi.reply_message(
+            event.reply_token,
+            TextSendMessage(text="test")
+        )
 
 def broadcastMessage(message="default message"):
     lineApi.broadcast(
