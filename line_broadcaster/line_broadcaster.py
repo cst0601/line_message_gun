@@ -4,7 +4,7 @@ line_broadcaster.py
 Connects to line's MessagingApi and broadcasts messages to user.
 """
 from flask import (
-    Blueprint, Flask, request, abort, currentApp
+    Blueprint, Flask, request, abort, current_app
 )
 from linebot import (
     LineBotApi, WebhookHandler
@@ -29,7 +29,7 @@ bp = Blueprint("broadcaster", __name__, url_prefix="/line")
 def callback():
     signature = request.headers["X-Line-Signature"]
     body = request.get_data(as_text=True)
-    currentApp.logger.info("Request body:" + body)
+    current_app.logger.info("Request body:" + body)
 
     #handle webhook body
     try:
