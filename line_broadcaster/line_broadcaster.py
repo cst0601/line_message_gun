@@ -42,10 +42,9 @@ def callback():
 @lineWebhook.add(MessageEvent, message=TextMessage)
 def handleMessage(event):
     if (event.message.text == "get id"):
-        senderProfile = event.source
         lineApi.reply_message(
             event.reply_token,
-            TextSendMessage(text="Your secret mix is: " + senderProfile["userId"])
+            TextSendMessage(text="Your secret mix is: " + event.source.user_id)
         )
     else:
         lineApi.reply_message(
