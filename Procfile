@@ -1,2 +1,1 @@
-worker: pip install dist/line_broadcaster-1.0b0-py3-none-any.whl
-web: waitress-serve --call line_broadcaster:create_app
+web: waitress-serve --call --port=8080 line_broadcaster:create_app

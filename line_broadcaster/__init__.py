@@ -29,4 +29,8 @@ def create_app(test_config=None):
         line_broadcaster.broadcastMessage()
         return "Hello, World!"
 
+    @app.route("/")
+    def homepage():
+        return "HP"
+
     return app
