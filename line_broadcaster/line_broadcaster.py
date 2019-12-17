@@ -30,7 +30,7 @@ def callback():
     signature = request.headers["X-Line-Signature"]
     body = request.get_data(as_text=True)
     current_app.logger.info("Request body:" + body)
-
+    print("--received request")
     #handle webhook body
     try:
         lineWebhook.handle(body, signature)
@@ -41,10 +41,11 @@ def callback():
 
 @lineWebhook.add(MessageEvent, message=TextMessage)
 def handleMessage(event):
-    lineApi.reply_message(
-        event.reply_token,
-        TextSendMessage(text="Your secret mix is: " + event.source.userId)
-    )
+    if (event.message.text == "get id"):
+        lineApi.reply_message(
+            event.reply_token,
+            TextSendMessage(text="Your secret mix is: " + event.source.userId)
+        )
 
 def broadcastMessage(message="default message"):
     lineApi.broadcast(
