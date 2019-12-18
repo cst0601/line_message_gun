@@ -57,11 +57,12 @@ def broadcastMessage(message="default message"):
         TextSendMessage(text=message)
     )
 
-def multiCastMessage():
+def multiCastMessage(userIdList):
     lineApi.multicast(
-        ["--aluminum--"],
+        userIdList,
         TextSendMessage(text="You've received some Secret Chikuma Mix.")
     )
 
 if __name__ == "__main__":
-    broadcastMessage()
+    #broadcastMessage()
+    multiCastMessage()
